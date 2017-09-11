@@ -3,13 +3,14 @@ import java.util.*;
 
 
 public class readProSpec {
-    private Scanner reader;
+    private Scanner tableReader;
+    private Scanner rowReader;
 
     public void openFile(String columnName){
         try{
-            String dataToRead = "C:\\Users\\danie\\IdeaProjects\\ProSave\\src\\"+columnName+"_E2_M.txt";
-            //String dataToRead = "C:\\Users\\danie\\IdeaProjects\\ProSave\\src\\exceldata.txt";
-            reader = new Scanner(new File(dataToRead));//"C:\\Users\\danie\\IdeaProjects\\ProSave\\src\\241_E2_M.txt"
+            //String dataToRead = "C:\\Users\\danie\\IdeaProjects\\ProSave\\src\\"+columnName+"_E2_M.txt";
+            String dataToRead = "C:\\Users\\danie\\IdeaProjects\\ProSave\\src\\exceldata.txt";
+            tableReader = new Scanner(new File(dataToRead));//"C:\\Users\\danie\\IdeaProjects\\ProSave\\src\\241_E2_M.txt"
 
         }
         catch(Exception e){
@@ -22,12 +23,27 @@ public class readProSpec {
 
         ArrayList<Map<String,Double>> listOfMaps = new ArrayList<>();
 
+        boolean firstRow = true;
+        while(tableReader.hasNextLine()){
+            String dataRow = tableReader.nextLine();
+            rowReader = new Scanner(dataRow);
+            if(firstRow){
+                String
 
-        while(reader.hasNextLine()){
-            String proteinName = reader.next();
+            }
+            else{
+                String proteinName = rowReader.next();
+                while(rowReader.hasNext()){
+
+                }
+            }
+
+
+
+
 
             for(int i = 0; i<numberOfCols; i++){
-                double spectralCount = Double.parseDouble(reader.next());
+                double spectralCount = Double.parseDouble(tableReader.next());
                 listOfMaps.get(i).put(proteinName, spectralCount);
             }
 
