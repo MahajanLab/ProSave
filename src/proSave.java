@@ -11,9 +11,9 @@ public class proSave {//8-8 dm10AM
         //String numOfCols = numOfColsFromUser.nextLine();
         //numOfColsFromUser.close();
 
-        System.out.print("\n\nWhich column of data do you need to compare to(241)? ");
+        System.out.print("\n\nWhich column of data do you need to compare to(first column is columnn 0)? ");
         Scanner colNumFromUser = new Scanner(System.in);
-        String colNumber = colNumFromUser.nextLine();
+        int colNumber = Integer.parseInt(colNumFromUser.nextLine());
 
         System.out.println("Protein Analytics\n------------------");
         ArrayList<Protein> theProteins = new ArrayList<Protein>();
@@ -28,15 +28,14 @@ public class proSave {//8-8 dm10AM
             itr.next().printProtein();
         }
 
-        int numberOfCols = 2;
         readProSpec scanner1 = new readProSpec();
-        scanner1.openFile(colNumber);
-        ArrayList<Map<String, Double>> listOfMaps = scanner1.readFile(numberOfCols);
+        scanner1.openFile();
+        ArrayList<Map<String, Protein>> listOfMapsOfProteins = scanner1.readFile();
         scanner1.closeFile();
 
         readPro scanner2 = new readPro();
         scanner2.openFile();
-        scanner2.readFile(listOfMaps);
+        scanner2.readFile(listOfMapsOfProteins.get(colNumber));
         scanner2.closeFile();
         //System.out.println(colNumber);
 

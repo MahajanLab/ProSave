@@ -18,17 +18,16 @@ public class readPro {
         }
     }
 
-    public void readFile(ArrayList<Map<String,Double>> listOfMaps){
+    public void readFile(Map<String,Protein> keyMap){
         //map that will have spectral counts added to it
-        Map<String, Double> keyMap = listOfMaps.get(0);
-
+        //Map<String, Double> updatedMap = new HashMap<String, Double>();
         while(reader.hasNext()){
             String proteinName = reader.next();
-            double spectralCount = keyMap.get(proteinName);
+            int spectralCount = keyMap.get(proteinName).getSpectralCount();
             //updatedMap.put(proteinName, spectralCount);
 
-            System.out.println(proteinName +"\t" +spectralCount);
-
+//            System.out.println(proteinName +"\t" +spectralCount);
+            System.out.println(spectralCount);
         }
 
     }
