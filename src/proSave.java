@@ -30,12 +30,12 @@ public class proSave {//8-8 dm10AM
 
         readProSpec scanner1 = new readProSpec();
         scanner1.openFile();
-        ArrayList<Map<String, Protein>> listOfMapsOfProteins = scanner1.readFile();
+        Map<String, Map<String, Integer>> allOriginalData = scanner1.readFile();
         scanner1.closeFile();
 
         readPro scanner2 = new readPro();
         scanner2.openFile();
-        scanner2.readFile(listOfMapsOfProteins.get(colNumber));
+        scanner2.readFile(allOriginalData.get(colNumber));
         scanner2.closeFile();
         //System.out.println(colNumber);
 
