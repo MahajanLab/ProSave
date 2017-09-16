@@ -8,27 +8,15 @@ public class readProSpec {
     private ArrayList<String> listOfColumnNames = new ArrayList<>();
     public void openFile() {
         try {
-            //String dataToRead = "C:\\Users\\danie\\IdeaProjects\\ProSave\\src\\"+columnName+"_E2_M.txt";
             String dataToRead = "C:\\Users\\danie\\IdeaProjects\\ProSave\\src\\exceldata.txt";
-            tableReader = new Scanner(new File(dataToRead));//"C:\\Users\\danie\\IdeaProjects\\ProSave\\src\\241_E2_M.txt"
+            tableReader = new Scanner(new File(dataToRead));
 
         } catch (Exception e) {
             System.out.println("could not find file");
         }
     }
 
-    public void printEverything(Map<String, Map<String, Integer>> fullDataToPrint){
-        Map<String, Integer> columnOfProteins = new HashMap<>();
-        for(int i = 0; i< fullDataToPrint.size(); i++)
 
-            columnOfProteins = fullDataToPrint.get(listOfColumnNames.get(i));//.values().toArray();
-            System.out.println("----------------NEW COLUMN___________________");
-            Object[] x = columnOfProteins.values().toArray();
-            for(int j =0; j < columnOfProteins.size(); j++){
-                System.out.println(x[j]);
-            }
-
-    }
 
     public Map<String, Map<String, Integer>> readFile() {
         Map<String, Map<String, Integer>> allOriginalData = new HashMap<>();
@@ -46,11 +34,7 @@ public class readProSpec {
                 } else {
                     int proteinSpectralCount = Integer.parseInt(rowReader.next());
                     String columnNameKey = listOfColumnNames.get(currentColumn);
-                    Map<String, Integer> columnOfProteinsOriginal = new HashMap<>();
                     if (allOriginalData.containsKey(columnNameKey)) {
-//                        columnOfProteinsOriginal = allOriginalData.get(columnNameKey);
-//                        columnOfProteinsOriginal.put(proteinName, proteinSpectralCount);
-//                        allOriginalData.replace(columnNameKey, columnOfProteinsOriginal);
                         allOriginalData.get(columnNameKey).put(proteinName, proteinSpectralCount);
                     } else {
                         Map<String, Integer> columnOfProteinsOriginalInit = new HashMap<>();
@@ -63,6 +47,9 @@ public class readProSpec {
             if (firstRow)
                 firstRow = false;
         }
+        for(int i = 0; i < listOfColumnNames.size(); i++)
+            System.out.println(listOfColumnNames.get(i));
+
         return allOriginalData;
     }
 

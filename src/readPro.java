@@ -18,26 +18,17 @@ public class readPro {
     }
 
     public void readFile(Map<String, Integer> keyMap) {
-        //map that will have spectral counts added to it
-        //Map<String, Double> updatedMap = new HashMap<String, Double>();
         while (reader.hasNext()) {
             String proteinName = reader.next();
             int spectralCount = 0;
-            if(keyMap.containsKey(proteinName))
+            if (keyMap.containsKey(proteinName))
                 spectralCount = keyMap.get(proteinName);
             else
                 System.out.println("ERROR");
-            //updatedMap.put(proteinName, spectralCount);
-
-//            System.out.println(proteinName +"\t" +spectralCount);
             System.out.println(spectralCount);
         }
 
     }
-
-//    String words = "word word2 word3 word4";
-//    StringTokenizer st = new Tokenizer(words);
-//st.countTokens();
 
     public void closeFile() {
         reader.close();
