@@ -5,7 +5,7 @@ import java.util.*;
 public class readProSpec {
     private Scanner tableReader;
     private Scanner rowReader;
-
+    private ArrayList<String> listOfColumnNames = new ArrayList<>();
     public void openFile() {
         try {
             //String dataToRead = "C:\\Users\\danie\\IdeaProjects\\ProSave\\src\\"+columnName+"_E2_M.txt";
@@ -17,13 +17,21 @@ public class readProSpec {
         }
     }
 
-    public Map<String, Map<String, Integer>> readFile() {
-//        Map<String, Double> proSpecMap = new HashMap<String, Double>();
+    public void printEverything(Map<String, Map<String, Integer>> fullDataToPrint){
+        Map<String, Integer> columnOfProteins = new HashMap<>();
+        for(int i = 0; i< fullDataToPrint.size(); i++)
 
-//        ArrayList<Map<String, Protein>> listOfMapsOfProteins = new ArrayList<>();
-//        Map<String,ArrayList<Protein>> mapOfProteinLists = new HashMap<>();
+            columnOfProteins = fullDataToPrint.get(listOfColumnNames.get(i));//.values().toArray();
+            System.out.println("----------------NEW COLUMN___________________");
+            Object[] x = columnOfProteins.values().toArray();
+            for(int j =0; j < columnOfProteins.size(); j++){
+                System.out.println(x[j]);
+            }
+
+    }
+
+    public Map<String, Map<String, Integer>> readFile() {
         Map<String, Map<String, Integer>> allOriginalData = new HashMap<>();
-        ArrayList<String> listOfColumnNames = new ArrayList<>();
 
         boolean firstRow = true;
         while (tableReader.hasNextLine()) {
@@ -37,24 +45,18 @@ public class readProSpec {
                     listOfColumnNames.add(currentColumn, columnName);
                 } else {
                     int proteinSpectralCount = Integer.parseInt(rowReader.next());
-//                    Protein newProtein = new Protein(proteinName, proteinSpectralCount);
-//                    listOfMapsOfProteins.get(currentColumn).put(, newProtein);
                     String columnNameKey = listOfColumnNames.get(currentColumn);
                     Map<String, Integer> columnOfProteinsOriginal = new HashMap<>();
                     if (allOriginalData.containsKey(columnNameKey)) {
-                        columnOfProteinsOriginal = allOriginalData.get(columnNameKey);
-                        columnOfProteinsOriginal.put(proteinName, proteinSpectralCount);
-//                        mapOfProteinLists.get(columnNameKey).add(newProtein);
+//                        columnOfProteinsOriginal = allOriginalData.get(columnNameKey);
+//                        columnOfProteinsOriginal.put(proteinName, proteinSpectralCount);
+//                        allOriginalData.replace(columnNameKey, columnOfProteinsOriginal);
+                        allOriginalData.get(columnNameKey).put(proteinName, proteinSpectralCount);
                     } else {
                         Map<String, Integer> columnOfProteinsOriginalInit = new HashMap<>();
                         columnOfProteinsOriginalInit.put(proteinName, proteinSpectralCount);
-//                        mapOfProteinLists.put(columnNameKey,columnOfProteinsInit)
+                        allOriginalData.put(columnNameKey, columnOfProteinsOriginalInit);
                     }
-//                    Map<String, Protein> columnOfData = mapOfProteinLists.get(currentColumn);
-//                    Check if column actually exists
-//                    if(columnOfData.containsKey(columnNameKey))
-//                        columnOfData.put(columnNameKey, newProtein);
-//                    else
                 }
                 currentColumn++;
             }

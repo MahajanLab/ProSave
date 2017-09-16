@@ -8,22 +8,25 @@ public class readPro {
 
     private Scanner reader;
 
-    public void openFile(){
-        try{
+    public void openFile() {
+        try {
             reader = new Scanner(new File("C:\\Users\\danie\\IdeaProjects\\ProSave\\src\\getSpectralCounts.txt"));
 
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             System.out.println("could not find file");
         }
     }
 
-    public void readFile(Map<String,Integer> keyMap){
+    public void readFile(Map<String, Integer> keyMap) {
         //map that will have spectral counts added to it
         //Map<String, Double> updatedMap = new HashMap<String, Double>();
-        while(reader.hasNext()){
+        while (reader.hasNext()) {
             String proteinName = reader.next();
-            int spectralCount = keyMap.get(proteinName);
+            int spectralCount = 0;
+            if(keyMap.containsKey(proteinName))
+                spectralCount = keyMap.get(proteinName);
+            else
+                System.out.println("ERROR");
             //updatedMap.put(proteinName, spectralCount);
 
 //            System.out.println(proteinName +"\t" +spectralCount);
@@ -36,7 +39,7 @@ public class readPro {
 //    StringTokenizer st = new Tokenizer(words);
 //st.countTokens();
 
-    public void closeFile(){
+    public void closeFile() {
         reader.close();
     }
 
