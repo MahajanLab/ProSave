@@ -20,7 +20,7 @@ public class proSave {//9-16 dm6PM
 
         readProSpec scanner1 = new readProSpec();
         scanner1.openFile();
-        Map<String, Map<String, Integer>> allOriginalData = scanner1.readFile();
+        Map<String, Map<String, Double>> allOriginalData = scanner1.readFile();
         scanner1.closeFile();
 
         readPro scanner2 = new readPro();

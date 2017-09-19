@@ -1,6 +1,4 @@
 import java.io.File;
-import java.util.HashMap;
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -17,14 +15,14 @@ public class readPro {
         }
     }
 
-    public void readFile(Map<String, Integer> keyMap) {
+    public void readFile(Map<String, Double> keyMap) {
         while (reader.hasNext()) {
             String proteinName = reader.next();
-            int spectralCount = 0;
+            double spectralCount = 0;
             if (keyMap.containsKey(proteinName))
                 spectralCount = keyMap.get(proteinName);
             else
-                System.out.println("ERROR");
+                System.out.println("ERROR" + proteinName);
             System.out.println(spectralCount);
         }
 

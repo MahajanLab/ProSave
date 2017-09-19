@@ -8,7 +8,7 @@ public class readProSpec {
     private ArrayList<String> listOfColumnNames = new ArrayList<>();
     public void openFile() {
         try {
-            String dataToRead = "C:\\Users\\danie\\IdeaProjects\\ProSave\\src\\exceldata.txt";
+            String dataToRead = "C:\\Users\\danie\\IdeaProjects\\ProSave\\src\\Mouse_RV_Data.txt";
             tableReader = new Scanner(new File(dataToRead));
 
         } catch (Exception e) {
@@ -18,8 +18,8 @@ public class readProSpec {
 
 
 
-    public Map<String, Map<String, Integer>> readFile() {
-        Map<String, Map<String, Integer>> allOriginalData = new HashMap<>();
+    public Map<String, Map<String, Double>> readFile() {
+        Map<String, Map<String, Double>> allOriginalData = new HashMap<>();
 
         boolean firstRow = true;
         while (tableReader.hasNextLine()) {
@@ -32,12 +32,12 @@ public class readProSpec {
                     String columnName = rowReader.next();
                     listOfColumnNames.add(currentColumn, columnName);
                 } else {
-                    int proteinSpectralCount = Integer.parseInt(rowReader.next());
+                    double proteinSpectralCount = Double.parseDouble(rowReader.next());
                     String columnNameKey = listOfColumnNames.get(currentColumn);
                     if (allOriginalData.containsKey(columnNameKey)) {
                         allOriginalData.get(columnNameKey).put(proteinName, proteinSpectralCount);
                     } else {
-                        Map<String, Integer> columnOfProteinsOriginalInit = new HashMap<>();
+                        Map<String, Double> columnOfProteinsOriginalInit = new HashMap<>();
                         columnOfProteinsOriginalInit.put(proteinName, proteinSpectralCount);
                         allOriginalData.put(columnNameKey, columnOfProteinsOriginalInit);
                     }
