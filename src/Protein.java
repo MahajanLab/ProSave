@@ -16,7 +16,7 @@ public class Protein {
 
 
     /**
-     * Protien class constructor.
+     * Protein class constructor.
      * @param proName Name of the protein.
      * @param originalData Original data corresponding to specific Protein object.
      */
