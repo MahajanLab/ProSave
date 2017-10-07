@@ -4,10 +4,10 @@ import java.util.Map;
 import java.util.Scanner;
 
 /**
- * @author Daniel Machlab
  * The ProSave class is the ProSave program driver class. ProSave returns protein data lost from original data set. Inputs an bare subset of proteins derived from the origina
  * data and returns the subset of proteins with all data points. Intended use as a tool to determine the spectral count
  * of each individual protein unique to a tissue region.
+ * @author Daniel Machlab
  */
 public class ProSave {
 

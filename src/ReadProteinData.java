@@ -5,6 +5,7 @@ import java.util.*;
 /**
  * The ReadProteinData class processes the original data set and saves the proteins' data for future comparison by the
  * ReadProtein class.
+ * @author Daniel Machlab
  */
 public class ReadProteinData {
     /**

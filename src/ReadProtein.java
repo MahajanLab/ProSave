@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 /**
  * The ReadProtein class processes the input proteins that will be returned with their original data set.
+ * @author Daniel Machlab
  */
 public class ReadProtein {
 

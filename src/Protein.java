@@ -1,5 +1,6 @@
 /**
  * The Protein class stores all information needed to represent a protein with original data.
+ * @author Daniel Machlab
  */
 public class Protein {
 
