@@ -3,10 +3,20 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
 
-public class proSave {//9-16 dm6PM
-    public static void main(String[] args) {
+/**
+ * @author Daniel Machlab
+ * The ProSave class is the ProSave program driver class. ProSave returns protein data lost from original data set. Inputs an bare subset of proteins derived from the origina
+ * data and returns the subset of proteins with all data points. Intended use as a tool to determine the spectral count
+ * of each individual protein unique to a tissue region.
+ */
+public class ProSave {
 
-        System.out.print("\n\nWhich column of data do you need to compare to(first column is columnn 0)? ");
+    /**
+     * ProSave class main method.
+     * @param args None.
+     */
+    public static void main(String[] args) {
+        System.out.print("\n\nEnter the name of the column for comparison:   ");
         Scanner colNumFromUser = new Scanner(System.in);
         String colName = colNumFromUser.nextLine();
 
@@ -18,12 +28,12 @@ public class proSave {//9-16 dm6PM
             itr.next().printProtein();
         }
 
-        readProSpec scanner1 = new readProSpec();
+        ReadProteinData scanner1 = new ReadProteinData();
         scanner1.openFile();
         Map<String, Map<String, Double>> allOriginalData = scanner1.readFile();
         scanner1.closeFile();
 
-        readPro scanner2 = new readPro();
+        ReadProtein scanner2 = new ReadProtein();
         scanner2.openFile();
         scanner2.readFile(allOriginalData.get(colName));
         scanner2.closeFile();
