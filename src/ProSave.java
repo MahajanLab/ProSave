@@ -14,42 +14,20 @@ import java.util.Scanner;
  * @author Daniel Machlab
  */
 public class ProSave extends JFrame{
-
-
-    public void doWork() {
-        outputProteinDataPair.append("test");
-        System.out.print("\n\nEnter the name of the column for comparison:   ");
-        Scanner colNumFromUser = new Scanner(System.in);
-        String colName = colNumFromUser.nextLine();
-
-        System.out.println("Protein Analytics\n------------------");
-        ArrayList<Protein> theProteins = new ArrayList<Protein>();
-
-        Iterator<Protein> itr = theProteins.iterator();
-        while (itr.hasNext()) {
-            itr.next().printProtein();
-        }
-
-        ReadProteinData scanner1 = new ReadProteinData();
-        scanner1.openFile();
-        Map<String, Map<String, Double>> allOriginalData = scanner1.readFile();
-        scanner1.closeFile();
-
-        ReadProtein scanner2 = new ReadProtein();
-        scanner2.openFile();
-        scanner2.readFile(allOriginalData.get(colName));
-        scanner2.closeFile();
-    }
-
     private JPanel controlPanelLeft;
     private JTextArea outputProteinDataPair;
     private JTextField subsetProteinFileName;
+    private JTextField originalDataFileName;
+    private JTextField columnComparisonInput;
+
 
     public ProSave(){
+
         JPanel originalDataPanel =  new JPanel();
         JPanel subsetDataPanel =    new JPanel();
         JPanel outputPanel =        new JPanel();
 //        JPanel controlPanel =       new JPanel();
+        JPanel columnComparisonPanel = new JPanel();
 
         JPanel controlPanelRight =  new JPanel();
         controlPanelLeft =          new JPanel();
@@ -57,19 +35,27 @@ public class ProSave extends JFrame{
         JLabel addOriginal = new JLabel("Enter file name of original data: ");
         JLabel addSubset = new JLabel("Enter file name of protein list: ");
         JLabel output = new JLabel("Restored protein-data pairs: ");
+        JLabel columnComparison = new JLabel("Enter column to compare: ");
 
-        JTextField originalDataFileName =   new JTextField(16);
-        outputProteinDataPair =             new JTextArea(32,16);
+        originalDataFileName =              new JTextField(16);
+        outputProteinDataPair =             new JTextArea(8,16);
         subsetProteinFileName =             new JTextField(16);
+        columnComparisonInput =             new JTextField(16);
+
+        originalDataPanel.setVisible(false);
+        subsetDataPanel.setVisible(false);
+
 
 
         Font font = new Font("", Font.PLAIN, 32);
         addOriginal.setFont(font);
         addSubset.setFont(font);
         output.setFont(font);
+        columnComparison.setFont(font);
         subsetProteinFileName.setFont(font);
         originalDataFileName.setFont(font);
         outputProteinDataPair.setFont(font);
+        columnComparisonInput.setFont(font);
 
 //        originalDataPanel.setLayout(new GridLayout(2,1));
 //        subsetDataPanel.setLayout(new GridLayout(2,1));
@@ -94,23 +80,50 @@ public class ProSave extends JFrame{
         controlPanelRight.add(outputPanel);
         JScrollPane scrollPane = new JScrollPane(outputProteinDataPair);
         outputPanel.add(scrollPane);
+        columnComparisonPanel.add(columnComparison);
+        columnComparisonPanel.add(columnComparisonInput);
+        controlPanelLeft.add(columnComparisonPanel);
 
         TheHandler handler = new TheHandler();
-        subsetProteinFileName.addActionListener(handler);
+        columnComparisonInput.addActionListener(handler);
+    }
+
+    public void doWork(String colName) {
+        System.out.print("\n\nEnter the name of the column for comparison:   ");
+
+        System.out.println("Protein Analytics\n------------------");
+        ArrayList<Protein> theProteins = new ArrayList<Protein>();
+
+        Iterator<Protein> itr = theProteins.iterator();
+        while (itr.hasNext()) {
+            itr.next().printProtein();
+        }
+        //Control90Vitreous
+
+        ReadProteinData scanner1 = new ReadProteinData();
+        scanner1.openFile();
+        Map<String, Map<String, Double>> allOriginalData = scanner1.readFile();
+        scanner1.closeFile();
+
+        ReadProtein scanner2 = new ReadProtein();
+        scanner2.openFile();
+        scanner2.readFile(allOriginalData.get(colName), outputProteinDataPair);
+        scanner2.closeFile();
+    }
+
+    public void printTest(){
+        System.out.println("Use GUI interface");
     }
 
     private class TheHandler implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
-            if(e.getSource() == subsetProteinFileName){
+            if(e.getSource() == columnComparisonInput){
                 /*ProSave y = new ProSave();
-                y.*/doWork();
+                y.*/
+                doWork(e.getActionCommand());
             }
         }
-    }
-
-    public void printTest(){
-        System.out.println("Use GUI interface");
     }
 
 }

@@ -6,7 +6,7 @@ public class ProSaveGUI {
 
         ProSave x = new ProSave();
         x.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        x.setSize(1000,800);
+        x.setSize(1000,500);
         x.setVisible(true);
         x.printTest();
 

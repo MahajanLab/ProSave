@@ -1,5 +1,7 @@
 import java.io.*;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 /**
@@ -50,6 +52,11 @@ public class ReadProteinData {
             String proteinName = rowReader.next();
             while (rowReader.hasNext()) {
                 if (firstRow) {
+
+//                    Matcher m = Pattern.compile("(\".+?\")").matcher(rowReader.nextLine());
+//                    while(m.find())
+//                        listOfColumnNames.add(currentColumn, m.group(1).replace("\"", ""));
+
                     String columnName = rowReader.next();
                     listOfColumnNames.add(currentColumn, columnName);
                 } else {
@@ -70,6 +77,7 @@ public class ReadProteinData {
         }
         for(int i = 0; i < listOfColumnNames.size(); i++)
             System.out.println(listOfColumnNames.get(i));
+
 
         return allOriginalData;
     }
