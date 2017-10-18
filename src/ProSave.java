@@ -23,15 +23,22 @@ public class ProSave extends JFrame{
 
     public ProSave(){
 
+        Color textBoxColor = new Color(65,65,66);
+        Color backgroundJFColor = new Color(102,102,102);
+        Color bodyTextColor = new Color(237, 237,237);
+        Color titleTextColor = new Color(146, 203, 239);
+
         JPanel originalDataPanel =  new JPanel();
+        //originalDataPanel.setBackground(new Color(65,65,66));
         JPanel subsetDataPanel =    new JPanel();
         JPanel outputPanel =        new JPanel();
+
 //        JPanel controlPanel =       new JPanel();
         JPanel columnComparisonPanel = new JPanel();
 
         JPanel controlPanelRight =  new JPanel();
         controlPanelLeft =          new JPanel();
-
+        //controlPanelLeft.setBackground(new Color(65,65,66));
         JLabel addOriginal = new JLabel("Enter file name of original data: ");
         JLabel addSubset = new JLabel("Enter file name of protein list: ");
         JLabel output = new JLabel("Restored protein-data pairs: ");
@@ -42,8 +49,19 @@ public class ProSave extends JFrame{
         subsetProteinFileName =             new JTextField(16);
         columnComparisonInput =             new JTextField(16);
 
+        columnComparisonPanel.setBackground(backgroundJFColor);
+        outputPanel.setBackground(backgroundJFColor);
+        columnComparison.setForeground(titleTextColor);
+        output.setForeground(titleTextColor);
+        output.setBackground(textBoxColor);
+        columnComparisonInput.setBackground(textBoxColor);
+        columnComparisonInput.setForeground(bodyTextColor);
+        outputProteinDataPair.setBackground(textBoxColor);
+        outputProteinDataPair.setForeground(bodyTextColor);
+
         originalDataPanel.setVisible(false);
         subsetDataPanel.setVisible(false);
+
 
 
 
@@ -51,6 +69,7 @@ public class ProSave extends JFrame{
         addOriginal.setFont(font);
         addSubset.setFont(font);
         output.setFont(font);
+
         columnComparison.setFont(font);
         subsetProteinFileName.setFont(font);
         originalDataFileName.setFont(font);

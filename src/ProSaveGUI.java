@@ -1,4 +1,5 @@
 import javax.swing.JFrame;
+import java.awt.*;
 
 public class ProSaveGUI {
 
@@ -9,6 +10,8 @@ public class ProSaveGUI {
         x.setSize(1000,500);
         x.setVisible(true);
         x.printTest();
+        //x.setBackground(Color.WHITE);
+        x.getContentPane().setBackground(new Color(65,65,66));
 
     }
 
