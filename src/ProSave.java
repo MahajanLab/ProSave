@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
+import javax.swing.border.Border;
+import javax.swing.BorderFactory;
+
 
 /**
  * The ProSave class is the ProSave program driver class. ProSave returns protein data lost from original data set. Inputs an bare subset of proteins derived from the origina
@@ -18,15 +21,22 @@ public class ProSave extends JFrame{
     private JTextArea outputProteinDataPair;
     private JTextField subsetProteinFileName;
     private JTextField originalDataFileName;
-    private JTextField columnComparisonInput;
+    private JButton columnComparisonInput;
+
 
 
     public ProSave(){
-
+        Color borderColor = new Color (51,51,51);
         Color textBoxColor = new Color(65,65,66);
         Color backgroundJFColor = new Color(102,102,102);
         Color bodyTextColor = new Color(237, 237,237);
         Color titleTextColor = new Color(146, 203, 239);
+
+        Border border = BorderFactory.createLineBorder(borderColor,1);
+
+        ImageIcon img = new ImageIcon("img/Prosave logo@4x.png");
+
+        this.setIconImage(img.getImage());
 
         JPanel originalDataPanel =  new JPanel();
         //originalDataPanel.setBackground(new Color(65,65,66));
@@ -47,8 +57,12 @@ public class ProSave extends JFrame{
         originalDataFileName =              new JTextField(16);
         outputProteinDataPair =             new JTextArea(8,16);
         subsetProteinFileName =             new JTextField(16);
-        columnComparisonInput =             new JTextField(16);
+        columnComparisonInput =             new JButton("Control90Vitreous");
 
+
+
+        columnComparisonInput.setBorder(border);
+        outputProteinDataPair.setBorder(border);
         columnComparisonPanel.setBackground(backgroundJFColor);
         outputPanel.setBackground(backgroundJFColor);
         columnComparison.setForeground(titleTextColor);
@@ -103,9 +117,14 @@ public class ProSave extends JFrame{
         columnComparisonPanel.add(columnComparisonInput);
         controlPanelLeft.add(columnComparisonPanel);
 
+        scrollPane.setBorder(null);
+
         TheHandler handler = new TheHandler();
         columnComparisonInput.addActionListener(handler);
+
     }
+
+    public void initButtons()
 
     public void doWork(String colName) {
         System.out.print("\n\nEnter the name of the column for comparison:   ");
