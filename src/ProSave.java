@@ -2,10 +2,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Scanner;
 import javax.swing.border.Border;
 import javax.swing.BorderFactory;
 
@@ -21,18 +21,21 @@ public class ProSave extends JFrame{
     private JTextArea outputProteinDataPair;
     private JTextField subsetProteinFileName;
     private JTextField originalDataFileName;
-    private JButton columnComparisonInput;
+    private JPanel columnComparisonPanel;
+    ArrayList<JButton> buttonArrayList;
 
+    TheHandler handler;
+    ReadProteinData proteinData;
 
-
+    Color borderColor = new Color (51,51,51);
+    Color textBoxColor = new Color(65,65,66);
+    Color backgroundJFColor = new Color(102,102,102);
+    Color bodyTextColor = new Color(237, 237,237);
+    Color titleTextColor = new Color(146, 203, 239);
     public ProSave(){
-        Color borderColor = new Color (51,51,51);
-        Color textBoxColor = new Color(65,65,66);
-        Color backgroundJFColor = new Color(102,102,102);
-        Color bodyTextColor = new Color(237, 237,237);
-        Color titleTextColor = new Color(146, 203, 239);
 
-        Border border = BorderFactory.createLineBorder(borderColor,1);
+
+        Border border = BorderFactory.createLineBorder(borderColor,3);
 
         ImageIcon img = new ImageIcon("img/Prosave logo@4x.png");
 
@@ -44,7 +47,7 @@ public class ProSave extends JFrame{
         JPanel outputPanel =        new JPanel();
 
 //        JPanel controlPanel =       new JPanel();
-        JPanel columnComparisonPanel = new JPanel();
+        columnComparisonPanel = new JPanel();
 
         JPanel controlPanelRight =  new JPanel();
         controlPanelLeft =          new JPanel();
@@ -55,21 +58,18 @@ public class ProSave extends JFrame{
         JLabel columnComparison = new JLabel("Enter column to compare: ");
 
         originalDataFileName =              new JTextField(16);
-        outputProteinDataPair =             new JTextArea(8,16);
+        outputProteinDataPair =             new JTextArea(10,10);
         subsetProteinFileName =             new JTextField(16);
-        columnComparisonInput =             new JButton("Control90Vitreous");
 
 
 
-        columnComparisonInput.setBorder(border);
+        //columnComparisonInput.setBorder(border);
         outputProteinDataPair.setBorder(border);
         columnComparisonPanel.setBackground(backgroundJFColor);
         outputPanel.setBackground(backgroundJFColor);
         columnComparison.setForeground(titleTextColor);
         output.setForeground(titleTextColor);
         output.setBackground(textBoxColor);
-        columnComparisonInput.setBackground(textBoxColor);
-        columnComparisonInput.setForeground(bodyTextColor);
         outputProteinDataPair.setBackground(textBoxColor);
         outputProteinDataPair.setForeground(bodyTextColor);
 
@@ -88,7 +88,7 @@ public class ProSave extends JFrame{
         subsetProteinFileName.setFont(font);
         originalDataFileName.setFont(font);
         outputProteinDataPair.setFont(font);
-        columnComparisonInput.setFont(font);
+
 
 //        originalDataPanel.setLayout(new GridLayout(2,1));
 //        subsetDataPanel.setLayout(new GridLayout(2,1));
@@ -114,19 +114,40 @@ public class ProSave extends JFrame{
         JScrollPane scrollPane = new JScrollPane(outputProteinDataPair);
         outputPanel.add(scrollPane);
         columnComparisonPanel.add(columnComparison);
-        columnComparisonPanel.add(columnComparisonInput);
+
         controlPanelLeft.add(columnComparisonPanel);
 
         scrollPane.setBorder(null);
+        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-        TheHandler handler = new TheHandler();
-        columnComparisonInput.addActionListener(handler);
+        handler = new TheHandler();
+
+
+        proteinData = pullWork();
+        initButtons(proteinData.listOfColumnNames);
 
     }
 
-    public void initButtons()
+    public void initButtons(ArrayList<String> buttonNameList){
+        Font font = new Font("", Font.PLAIN, 28);
+        buttonArrayList = new ArrayList<>();
+        for(int i = 0; i < buttonNameList.size(); i++) {
+            JButton b = new JButton(buttonNameList.get(i));
+            columnComparisonPanel.add(b);
+            b.addActionListener(handler);
+            System.out.println(buttonNameList.get(i));
+            b.setBackground(textBoxColor);
+            b.setForeground(bodyTextColor);
+            b.setFont(font);
+            b.setPreferredSize(new Dimension(300, 50));
+            buttonArrayList.add(b);
 
-    public void doWork(String colName) {
+
+
+        }
+    }
+
+    public ReadProteinData pullWork() {
         System.out.print("\n\nEnter the name of the column for comparison:   ");
 
         System.out.println("Protein Analytics\n------------------");
@@ -136,18 +157,20 @@ public class ProSave extends JFrame{
         while (itr.hasNext()) {
             itr.next().printProtein();
         }
-        //Control90Vitreous
+        ReadProteinData proteinData = new ReadProteinData();
+//        Map<String, Map<String, Double>> allOriginalData = proteinData.allOriginalData;
+        return proteinData;
+    }
 
-        ReadProteinData scanner1 = new ReadProteinData();
-        scanner1.openFile();
-        Map<String, Map<String, Double>> allOriginalData = scanner1.readFile();
-        scanner1.closeFile();
+    public void doWork(String colName){
 
         ReadProtein scanner2 = new ReadProtein();
         scanner2.openFile();
-        scanner2.readFile(allOriginalData.get(colName), outputProteinDataPair);
+        scanner2.readFile(proteinData.allOriginalData.get(colName), outputProteinDataPair);
         scanner2.closeFile();
     }
+
+
 
     public void printTest(){
         System.out.println("Use GUI interface");
@@ -156,11 +179,13 @@ public class ProSave extends JFrame{
     private class TheHandler implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
-            if(e.getSource() == columnComparisonInput){
-                /*ProSave y = new ProSave();
-                y.*/
-                doWork(e.getActionCommand());
+
+            for(int i = 0; i < buttonArrayList.size(); i++){
+                if(e.getSource() == buttonArrayList.get(i))
+                    doWork(e.getActionCommand());
             }
+
+
         }
     }
 

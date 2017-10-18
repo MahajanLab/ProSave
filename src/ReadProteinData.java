@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.io.*;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -20,11 +21,22 @@ public class ReadProteinData {
      */
     private Scanner rowReader;
 
+    public Map<String, Map<String, Double>> allOriginalData = new HashMap<>();
 
     /**
      * Method openFile prepares text file OriginalData.txt to be scanned for data.
      */
-    private ArrayList<String> listOfColumnNames = new ArrayList<>();
+    public ArrayList<String> listOfColumnNames = new ArrayList<>();
+
+
+    public ReadProteinData(){
+        this.openFile();
+        this.readFile();
+        this.closeFile();
+    }
+
+
+
     public void openFile(/*String fileName*/) {
         try {
             String dataToRead = "src\\OriginalData.txt";
@@ -41,8 +53,8 @@ public class ReadProteinData {
      * @return Map object containing Maps of each column of data in OriginalData.txt. File GetOriginalData.txt
      * must be located in the src folder under project ProSave.
      */
-    public Map<String, Map<String, Double>> readFile() {
-        Map<String, Map<String, Double>> allOriginalData = new HashMap<>();
+    public void readFile() {
+
 
         boolean firstRow = true;
         while (tableReader.hasNextLine()) {
@@ -75,11 +87,7 @@ public class ReadProteinData {
             if (firstRow)
                 firstRow = false;
         }
-        for(int i = 0; i < listOfColumnNames.size(); i++)
-            System.out.println(listOfColumnNames.get(i));
 
-
-        return allOriginalData;
     }
 
 
