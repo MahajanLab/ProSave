@@ -15,6 +15,8 @@ public class Protein {
     private final int data;
 
 
+
+
     /**
      * Protein class constructor.
      * @param proName Name of the protein.

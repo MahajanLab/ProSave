@@ -55,7 +55,7 @@ public class ProSave extends JFrame{
         JLabel addOriginal = new JLabel("Enter file name of original data: ");
         JLabel addSubset = new JLabel("Enter file name of protein list: ");
         JLabel output = new JLabel("Restored protein-data pairs: ");
-        JLabel columnComparison = new JLabel("Enter column to compare: ");
+        JLabel columnComparison = new JLabel("Select column to compare: ");
 
         originalDataFileName =              new JTextField(16);
         outputProteinDataPair =             new JTextArea(10,10);
@@ -119,6 +119,7 @@ public class ProSave extends JFrame{
 
         scrollPane.setBorder(null);
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.setOpaque(true);
 
         handler = new TheHandler();
 
@@ -163,7 +164,7 @@ public class ProSave extends JFrame{
     }
 
     public void doWork(String colName){
-
+        outputProteinDataPair.setText("");
         ReadProtein scanner2 = new ReadProtein();
         scanner2.openFile();
         scanner2.readFile(proteinData.allOriginalData.get(colName), outputProteinDataPair);

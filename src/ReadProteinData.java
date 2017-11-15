@@ -58,10 +58,12 @@ public class ReadProteinData {
 
         boolean firstRow = true;
         while (tableReader.hasNextLine()) {
+            String proteinName = " ";
             String dataRow = tableReader.nextLine();
             rowReader = new Scanner(dataRow);
             int currentColumn = 0;
-            String proteinName = rowReader.next();
+            if(rowReader.hasNext())
+                 proteinName = rowReader.next();
             while (rowReader.hasNext()) {
                 if (firstRow) {
 
