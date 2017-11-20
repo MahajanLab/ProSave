@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -17,11 +18,16 @@ import javax.swing.BorderFactory;
  * @author Daniel Machlab
  */
 public class ProSave extends JFrame{
+    private JPanel firstPanel;
+    private JPanel secondPanel;
     private JPanel controlPanelLeft;
     private JTextArea outputProteinDataPair;
     private JTextField subsetProteinFileName;
     private JTextField originalDataFileName;
     private JPanel columnComparisonPanel;
+    private JButton getOriginalDateButton;
+    private JButton continueButton;
+    private JFileChooser openOriginalFile;
     ArrayList<JButton> buttonArrayList;
 
     TheHandler handler;
@@ -33,10 +39,9 @@ public class ProSave extends JFrame{
     Color bodyTextColor = new Color(237, 237,237);
     Color titleTextColor = new Color(146, 203, 239);
     public ProSave(){
-
-
+        openOriginalFile = new JFileChooser();
         Border border = BorderFactory.createLineBorder(borderColor,3);
-
+        Font bFont = new Font("", Font.PLAIN, 28);
         ImageIcon img = new ImageIcon("img/Prosave logo@4x.png");
 
         this.setIconImage(img.getImage());
@@ -45,6 +50,39 @@ public class ProSave extends JFrame{
         //originalDataPanel.setBackground(new Color(65,65,66));
         JPanel subsetDataPanel =    new JPanel();
         JPanel outputPanel =        new JPanel();
+        JPanel firstPanelLeft = new JPanel();
+        JPanel firstPanelRight = new JPanel();
+        getOriginalDateButton = new JButton();
+        continueButton = new JButton();
+        firstPanelLeft.setBackground(backgroundJFColor);
+        firstPanelRight.setBackground(backgroundJFColor);
+
+        getOriginalDateButton.setBackground(textBoxColor);
+        getOriginalDateButton.setForeground(bodyTextColor);
+        getOriginalDateButton.setFont(bFont);
+        getOriginalDateButton.setPreferredSize(new Dimension(300, 50));
+
+        continueButton.setBackground(textBoxColor);
+        continueButton.setForeground(bodyTextColor);
+        continueButton.setFont(bFont);
+        continueButton.setPreferredSize(new Dimension(300, 50));
+
+
+        firstPanelLeft.add(getOriginalDateButton);
+        firstPanelRight.add(continueButton);
+
+
+
+
+        getOriginalDateButton.setText("Load .txt File");
+        continueButton.setText("Continue");
+
+        secondPanel = new JPanel();
+        firstPanel = new JPanel();
+
+        secondPanel.setVisible(false);
+        firstPanel.add(firstPanelLeft);
+        firstPanel.add(firstPanelRight);
 
 //        JPanel controlPanel =       new JPanel();
         columnComparisonPanel = new JPanel();
@@ -96,11 +134,15 @@ public class ProSave extends JFrame{
         controlPanelRight.setLayout(new BoxLayout(controlPanelRight, BoxLayout.Y_AXIS));
         controlPanelLeft.setLayout(new BoxLayout(controlPanelLeft, BoxLayout.Y_AXIS));
         //controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.X_AXIS));
-        this.setLayout(new GridLayout(1,2));
+        secondPanel.setLayout(new GridLayout(1,2));
+        firstPanel.setLayout(new GridLayout(1,2));
         //this.add(controlPanel);
+        this.setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+        secondPanel.add(controlPanelLeft);
+        secondPanel.add(controlPanelRight);
+        this.add(secondPanel);
+        this.add(firstPanel);
 
-        this.add(controlPanelLeft);
-        this.add(controlPanelRight);
 
         originalDataPanel.add(addOriginal);
         subsetDataPanel.add(addSubset);
@@ -123,9 +165,11 @@ public class ProSave extends JFrame{
 
         handler = new TheHandler();
 
+        getOriginalDateButton.addActionListener(handler);
+        continueButton.addActionListener(handler);
 
-        proteinData = pullWork();
-        initButtons(proteinData.listOfColumnNames);
+//        proteinData = pullWork();
+//        initButtons(proteinData.listOfColumnNames);
 
     }
 
@@ -148,7 +192,7 @@ public class ProSave extends JFrame{
         }
     }
 
-    public ReadProteinData pullWork() {
+    public ReadProteinData pullWork(File originalData) {
         System.out.print("\n\nEnter the name of the column for comparison:   ");
 
         System.out.println("Protein Analytics\n------------------");
@@ -158,7 +202,7 @@ public class ProSave extends JFrame{
         while (itr.hasNext()) {
             itr.next().printProtein();
         }
-        ReadProteinData proteinData = new ReadProteinData();
+        ReadProteinData proteinData = new ReadProteinData(originalData);
 //        Map<String, Map<String, Double>> allOriginalData = proteinData.allOriginalData;
         return proteinData;
     }
@@ -180,7 +224,18 @@ public class ProSave extends JFrame{
     private class TheHandler implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            if(e.getSource() == getOriginalDateButton){
+                int returnVal = openOriginalFile.showOpenDialog(ProSave.this);
+                if(returnVal == JFileChooser.APPROVE_OPTION){
+                    File file = openOriginalFile.getSelectedFile();
+                    proteinData = pullWork(file);
+                    initButtons(proteinData.listOfColumnNames);
+                }
+            }
+            if(e.getSource() == continueButton){
+                firstPanel.setVisible(false);
+                secondPanel.setVisible(true);
+            }
             for(int i = 0; i < buttonArrayList.size(); i++){
                 if(e.getSource() == buttonArrayList.get(i))
                     doWork(e.getActionCommand());

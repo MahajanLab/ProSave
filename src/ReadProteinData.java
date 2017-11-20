@@ -29,18 +29,18 @@ public class ReadProteinData {
     public ArrayList<String> listOfColumnNames = new ArrayList<>();
 
 
-    public ReadProteinData(){
-        this.openFile();
+    public ReadProteinData(File originalData){
+        this.openFile(originalData);
         this.readFile();
         this.closeFile();
     }
 
 
 
-    public void openFile(/*String fileName*/) {
+    public void openFile(File file) {
         try {
             String dataToRead = "src\\OriginalData.txt";
-            tableReader = new Scanner(new File(dataToRead));
+            tableReader = new Scanner(file);
 
         } catch (Exception e) {
             System.out.println("could not find file");
