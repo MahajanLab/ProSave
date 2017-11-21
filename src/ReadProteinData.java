@@ -53,40 +53,44 @@ public class ReadProteinData {
      * must be located in the src folder under project ProSave.
      */
     public void readFile() {
+        try {
 
 
-        boolean firstRow = true;
-        while (tableReader.hasNextLine()) {
-            String proteinName = " ";
-            String dataRow = tableReader.nextLine();
-            rowReader = new Scanner(dataRow);
-            int currentColumn = 0;
-            if(rowReader.hasNext())
-                 proteinName = rowReader.next();
-            while (rowReader.hasNext()) {
-                if (firstRow) {
+            boolean firstRow = true;
+            while (tableReader.hasNextLine()) {
+                String proteinName = " ";
+                String dataRow = tableReader.nextLine();
+                rowReader = new Scanner(dataRow);
+                int currentColumn = 0;
+                if (rowReader.hasNext())
+                    proteinName = rowReader.next();
+                while (rowReader.hasNext()) {
+                    if (firstRow) {
 
 //                    Matcher m = Pattern.compile("(\".+?\")").matcher(rowReader.nextLine());
 //                    while(m.find())
 //                        listOfColumnNames.add(currentColumn, m.group(1).replace("\"", ""));
 
-                    String columnName = rowReader.next();
-                    listOfColumnNames.add(currentColumn, columnName);
-                } else {
-                    double proteinSpectralCount = Double.parseDouble(rowReader.next());
-                    String columnNameKey = listOfColumnNames.get(currentColumn);
-                    if (allOriginalData.containsKey(columnNameKey)) {
-                        allOriginalData.get(columnNameKey).put(proteinName, proteinSpectralCount);
+                        String columnName = rowReader.next();
+                        listOfColumnNames.add(currentColumn, columnName);
                     } else {
-                        Map<String, Double> columnOfProteinsOriginalInit = new HashMap<>();
-                        columnOfProteinsOriginalInit.put(proteinName, proteinSpectralCount);
-                        allOriginalData.put(columnNameKey, columnOfProteinsOriginalInit);
+                        double proteinSpectralCount = Double.parseDouble(rowReader.next());
+                        String columnNameKey = listOfColumnNames.get(currentColumn);
+                        if (allOriginalData.containsKey(columnNameKey)) {
+                            allOriginalData.get(columnNameKey).put(proteinName, proteinSpectralCount);
+                        } else {
+                            Map<String, Double> columnOfProteinsOriginalInit = new HashMap<>();
+                            columnOfProteinsOriginalInit.put(proteinName, proteinSpectralCount);
+                            allOriginalData.put(columnNameKey, columnOfProteinsOriginalInit);
+                        }
                     }
+                    currentColumn++;
                 }
-                currentColumn++;
+                if (firstRow)
+                    firstRow = false;
             }
-            if (firstRow)
-                firstRow = false;
+        }catch (Exception e){
+            System.out.println("Error Reading File");
         }
 
     }

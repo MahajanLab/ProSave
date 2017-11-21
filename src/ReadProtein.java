@@ -20,12 +20,12 @@ public class ReadProtein {
      * Method openFile prepares text file GetOriginalData.txt to be scanned for proteins. File GetOriginalData.txt
      * must be located in the src folder under project ProSave.
      */
-    public void openFile() {
+    public void openFile(String proteinInput) {
         try {
-            reader = new Scanner(new File("src\\GetOriginalData.txt"));
+            reader = new Scanner(proteinInput);
 
         } catch (Exception e) {
-            System.out.println("could not find file");
+            System.out.println("could not read input");
         }
     }
 

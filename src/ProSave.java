@@ -128,7 +128,7 @@ public class ProSave extends JFrame{
         originalDataFileName =              new JTextField(16);
         outputProteinDataPair =             new JTextArea(10,10);
         subsetProteinFileName =             new JTextField(16);
-        subsetProteinInput =                new JTextArea(10,10);
+        subsetProteinInput =                new JTextArea(10,12);
 
 
 
@@ -162,7 +162,7 @@ public class ProSave extends JFrame{
         subsetProteinFileName.setFont(font);
         originalDataFileName.setFont(font);
         outputProteinDataPair.setFont(font);
-        subsetProteinInput.setFont(font);
+        subsetProteinInput.setFont(bFont);
 
 
 
@@ -260,10 +260,10 @@ public class ProSave extends JFrame{
         return proteinData;
     }
 
-    public void doWork(String colName){
+    public void doWork(String colName, String proteinsIn){
         outputProteinDataPair.setText("");
         ReadProtein scanner2 = new ReadProtein();
-        scanner2.openFile();
+        scanner2.openFile(proteinsIn);
         scanner2.readFile(proteinData.allOriginalData.get(colName), outputProteinDataPair);
         scanner2.closeFile();
     }
@@ -293,10 +293,11 @@ public class ProSave extends JFrame{
             if(e.getSource() == continueButton){
                 firstPanel.setVisible(false);
                 secondPanel.setVisible(true);
+                System.out.println(subsetProteinInput.getText());
             }
             for(int i = 0; i < buttonArrayList.size(); i++){
                 if(e.getSource() == buttonArrayList.get(i))
-                    doWork(e.getActionCommand());
+                    doWork(e.getActionCommand(), subsetProteinInput.getText());
             }
 
 
