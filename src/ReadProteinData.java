@@ -24,7 +24,7 @@ public class ReadProteinData {
     public Map<String, Map<String, Double>> allOriginalData = new HashMap<>();
 
     /**
-     * Method openFile prepares text file OriginalData.txt to be scanned for data.
+     * Method openFile prepares the original data text file to be scanned for data.
      */
     public ArrayList<String> listOfColumnNames = new ArrayList<>();
 
@@ -39,7 +39,6 @@ public class ReadProteinData {
 
     public void openFile(File file) {
         try {
-            String dataToRead = "src\\OriginalData.txt";
             tableReader = new Scanner(file);
 
         } catch (Exception e) {
@@ -49,8 +48,8 @@ public class ReadProteinData {
 
 
     /**
-     * Method readFile reads OriginalData.txt and saves the original data input for future comparison.
-     * @return Map object containing Maps of each column of data in OriginalData.txt. File GetOriginalData.txt
+     * Method readFile reads the original data text file and saves the original data input for future comparison.
+     * @return Map object containing Maps of each column of data in the original data text file. File GetOriginalData.txt
      * must be located in the src folder under project ProSave.
      */
     public void readFile() {
