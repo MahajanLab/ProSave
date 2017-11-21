@@ -1,0 +1,53 @@
+<html>
+<head>
+<title>ProSave.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: #606366; font-weight: normal; font-style: normal; }
+.s0 { color: rgb(204,120,50); }
+.s1 { color: rgb(169,183,198); }
+.s2 { color: rgb(128,128,128); }
+.s3 { color: rgb(106,135,89); }
+</style>
+</head>
+<BODY BGCOLOR="#2b2b2b">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+ProSave.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">import </span><span class="s1">java.util.ArrayList</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.util.Iterator</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.util.Map</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.util.Scanner</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s0">public class </span><span class="s1">ProSave {</span><span class="s2">//9-16 dm6PM</span><span class="s1">
+    </span><span class="s0">public static void </span><span class="s1">main(String[] args) { 
+ 
+        System.out.print(</span><span class="s3">&quot;</span><span class="s0">\n\n</span><span class="s3">Which column of data do you need to compare to(first column is columnn 0)? &quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        Scanner colNumFromUser = </span><span class="s0">new </span><span class="s1">Scanner(System.in)</span><span class="s0">;</span><span class="s1"> 
+        String colName = colNumFromUser.nextLine()</span><span class="s0">;</span><span class="s1"> 
+ 
+        System.out.println(</span><span class="s3">&quot;Protein Analytics</span><span class="s0">\n</span><span class="s3">------------------&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        ArrayList&lt;Protein&gt; theProteins = </span><span class="s0">new </span><span class="s1">ArrayList&lt;Protein&gt;()</span><span class="s0">;</span><span class="s1"> 
+ 
+        Iterator&lt;Protein&gt; itr = theProteins.iterator()</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">while </span><span class="s1">(itr.hasNext()) { 
+            itr.next().printProtein()</span><span class="s0">;</span><span class="s1"> 
+        } 
+ 
+        ReadProteinData scanner1 = </span><span class="s0">new </span><span class="s1">ReadProteinData()</span><span class="s0">;</span><span class="s1">
+        scanner1.openFile()</span><span class="s0">;</span><span class="s1"> 
+        Map&lt;String</span><span class="s0">, </span><span class="s1">Map&lt;String</span><span class="s0">, </span><span class="s1">Double&gt;&gt; allOriginalData = scanner1.readFile()</span><span class="s0">;</span><span class="s1"> 
+        scanner1.closeFile()</span><span class="s0">;</span><span class="s1"> 
+ 
+        ReadProtein scanner2 = </span><span class="s0">new </span><span class="s1">ReadProtein()</span><span class="s0">;</span><span class="s1">
+        scanner2.openFile()</span><span class="s0">;</span><span class="s1"> 
+        scanner2.readFile(allOriginalData.get(colName))</span><span class="s0">;</span><span class="s1"> 
+        scanner2.closeFile()</span><span class="s0">;</span><span class="s1"> 
+ 
+    } 
+}</span></pre>
+</body>
+</html>

@@ -1,0 +1,25 @@
+public class Protein {
+    private final String proteinName;
+    private final int[] spectralCount;
+
+
+    public Protein(String proName, int specCount){
+        this.proteinName = proName;
+        this.spectralCount = specCount;
+    }
+
+    public String getProteinName() {
+        return proteinName;
+    }
+
+    public int getSpectralCount() {
+        return spectralCount;
+    }
+
+    public void printProtein(){
+        System.out.println("Name: " + this.proteinName + ", Spectral Count: " + this.spectralCount);
+
+    }
+
+
+}
